@@ -1,4 +1,6 @@
 import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import jwt from 'jsonwebtoken';
 import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
@@ -11,7 +13,12 @@ const PORT = process.env.PORT || 8080;
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-app.use(express.json());
+// app.use(express.json());
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // * RATE LIMITER CONFIG
 const LIMITER_TIMEOUT = 15;
@@ -54,10 +61,10 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/api', (req, res) => {
-  console.log(req.body);
-
-  res.json({ msg: 'From Server!' });
+app.use('/api/try', (req, res) => {
+  console.log('try to dl');
+  res.download('./pup.bat', 'pup.bat');
+  // res.json({ msg: 'From Server!' });
 });
 
 app.get('/get', (req, res) => {
