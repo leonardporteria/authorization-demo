@@ -122,7 +122,7 @@ function App() {
           <Route
             path='/authorized'
             element={
-              <div className='mx-8 p-4 h-full rounded-xl border '>
+              <div className='mx-8 p-8 h-full rounded-xl border '>
                 <Authorized />
               </div>
             }
@@ -130,7 +130,7 @@ function App() {
           <Route
             path='/unauthorized'
             element={
-              <div className='mx-8 p-4 h-full rounded-xl border '>
+              <div className='mx-8 p-8 h-full rounded-xl border '>
                 <Unauthorized />
               </div>
             }
