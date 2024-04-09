@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 8080;
 
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
-// app.use(express.json());
+app.use(express.json());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -61,19 +61,65 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/api/try', (req, res) => {
+app.use('/api/try', limiter, verifyTokenAndRole('admin'), (req, res) => {
   console.log('try to dl');
   res.download('./pup.bat', 'pup.bat');
   // res.json({ msg: 'From Server!' });
 });
 
-app.get('/get', (req, res) => {
-  res.download('./pup.bat');
+app.use('/api/try', limiter, verifyTokenAndRole('manager'), (req, res) => {
+  console.log('try to dl');
+  res.download('./pup.bat', 'pup.bat');
 });
 
-app.get('/download', verifyTokenAndRole('admin'), limiter, async (req, res) => {
-  // Access user information through req.user
-  res.json({ message: 'LOE' });
+// POST new auth (public route)
+app.post('/api/auth', limiter, async (req, res) => {
+  console.log(req.body);
+
+  const users = [
+    {
+      id: 0,
+      username: process.env.ADMIN_USERNAME,
+      password: process.env.ADMIN_PASSWORD,
+      role: 'admin',
+    },
+    {
+      id: 1,
+      username: process.env.MANAGER_USERNAME,
+      password: process.env.MANAGER_PASSWORD,
+      role: 'manager',
+    },
+    {
+      id: 2,
+      username: process.env.USER_USERNAME,
+      password: process.env.USER_PASSWORD,
+      role: 'user',
+    },
+  ];
+
+  console.log(users);
+
+  const { username, password, role } = req.body;
+
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
+
+  if (!user) {
+    return res.status(401).json({ message: 'Authentication failed' });
+  }
+
+  if (role !== user.role) {
+    return res.status(403).json({ message: 'Unauthorized: Insufficient role' });
+  }
+
+  const token = jwt.sign(
+    { userId: user.id, username: user.username, role: user.role },
+    SECRET_KEY,
+    { expiresIn: '1h' }
+  );
+
+  res.json({ message: 'POST new auth', token });
 });
 
 //* CONNECTION

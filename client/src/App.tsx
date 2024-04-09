@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Link, useMatch } from 'react-router-dom';
 
+import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ModeToggle } from './components/ui/mode-toggle';
 import { Button } from '@/components/ui/button';
@@ -120,7 +121,7 @@ function App() {
             }
           />
           <Route
-            path='/authorized'
+            path='/authorized/*'
             element={
               <div className='mx-8 p-8 h-full rounded-xl border '>
                 <Authorized />
@@ -137,6 +138,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </ThemeProvider>
   );
 }
