@@ -21,7 +21,7 @@ const Manager = () => {
       return;
     }
 
-    fetch('/api/manager', {
+    fetch('https://authorization-demo-80wf.onrender.com/api/manager', {
       headers: {
         Authorization: `${token}`,
       },
