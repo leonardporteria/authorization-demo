@@ -61,14 +61,13 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/api/try', limiter, verifyTokenAndRole('admin'), (req, res) => {
-  console.log('try to dl');
+app.use('/api/admin', limiter, verifyTokenAndRole('admin'), (req, res) => {
+  console.log('Admin Endpoint');
   res.download('./pup.bat', 'pup.bat');
-  // res.json({ msg: 'From Server!' });
 });
 
-app.use('/api/try', limiter, verifyTokenAndRole('manager'), (req, res) => {
-  console.log('try to dl');
+app.use('/api/manager', limiter, verifyTokenAndRole('manager'), (req, res) => {
+  console.log('Manager Endpoint');
   res.download('./pup.bat', 'pup.bat');
 });
 

