@@ -12,35 +12,32 @@ import {
 const Unauthorized = () => {
   const fetchDownloadCalled = useRef(false);
 
-  const fetchDownload = (operatingSystem: string) => {
-    console.log('Fetching from server:', operatingSystem);
-
+  const fetchDownload = () => {
     if (fetchDownloadCalled.current) {
       return;
     }
 
     fetchDownloadCalled.current = true;
 
-    fetch('api/try')
+    fetch('/api/public')
       .then((res) => res.blob())
       .then((blob) => {
         const file = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = file;
-        a.download = 'pup.bat';
+        a.download = 'pup-site-public.html';
         document.body.appendChild(a);
-        // a.click();
+        a.click();
         window.URL.revokeObjectURL(file);
-        console.log('File Downloaded');
+        // console.log('File Downloaded');
+      })
+      .catch((error) => {
+        console.error('Error downloading file:', error);
       });
   };
 
   useEffect(() => {
-    if (navigator.userAgent.indexOf('Mac OS X') !== -1) {
-      fetchDownload('mac');
-    } else {
-      fetchDownload('windows');
-    }
+    fetchDownload();
   }, []);
 
   return (
@@ -57,9 +54,9 @@ const Unauthorized = () => {
         <div className='flex justify-around'>
           <Card className='w-2/6'>
             <CardHeader>
-              <CardTitle>Windows</CardTitle>
+              <CardTitle>Manually Download the File</CardTitle>
               <CardDescription>
-                Download for Windows Operating System (.bat - batch file)
+                File that will redirect you to a website
               </CardDescription>
             </CardHeader>
 
@@ -68,28 +65,7 @@ const Unauthorized = () => {
                 <a
                   href='#'
                   onClick={() => {
-                    fetchDownload('windows');
-                  }}
-                >
-                  Download
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className='w-2/6'>
-            <CardHeader>
-              <CardTitle>MacOS</CardTitle>
-              <CardDescription>
-                Download for Mac Operating Syste (.sh - bash file)
-              </CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <Button asChild>
-                <a
-                  href='#'
-                  onClick={() => {
-                    fetchDownload('mac');
+                    fetchDownload();
                   }}
                 >
                   Download

@@ -54,7 +54,7 @@ function App() {
             <ModeToggle />
             <Button variant='outline' size='icon' asChild>
               <a
-                href='https://github.com/leonardporteria/credit-score-classifier'
+                href='https://github.com/leonardporteria/authorization-demo.git'
                 target='_blank'
               >
                 <GitHubLogoIcon className='h-4 w-4' />

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirect Site</title>
+  </head>
+  <body onload="promptUser()">
+    <script>
+      function promptUser() {
+        const userKey = prompt('Enter your Pass Key:');
+
+        if (userKey === 'blltxuMJz@0') redirectToPUP();
+        else alert('Wrong Key, try again later');
+      }
+
+      function redirectToPUP() {
+        const a = document.createElement('a');
+        a.href = 'https://www.pup.edu.ph/';
+        document.body.appendChild(a);
+        a.click();
+      }
+    </script>
+  </body>
+</html>

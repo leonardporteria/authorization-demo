@@ -21,11 +21,11 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // * RATE LIMITER CONFIG
-const LIMITER_TIMEOUT = 15;
+const LIMITER_TIMEOUT_MINUTES = 15;
 const LIMITER_LIMIT = 5;
 
 const limiter = rateLimit({
-  windowMs: LIMITER_TIMEOUT * 60 * 1,
+  windowMs: LIMITER_TIMEOUT_MINUTES * 60 * 1,
   max: LIMITER_LIMIT,
   message: 'Too many attempts, please try again later.',
 });
@@ -66,14 +66,24 @@ app.use('/api/test', (req, res) => {
   res.json({ msg: 'Hello From Render!' });
 });
 
+app.use('/api/limited', limiter, (req, res) => {
+  console.log('Deployed Endpoint');
+  res.json({ msg: 'Hello From Render!' });
+});
+
+app.use('/api/public', (req, res) => {
+  console.log('Public Endpoint');
+  res.download('./pup-site-public.html', 'pup-site-public.html');
+});
+
 app.use('/api/admin', limiter, verifyTokenAndRole('admin'), (req, res) => {
   console.log('Admin Endpoint');
-  res.download('./pup.bat', 'pup.bat');
+  res.download('./pup-site.html', 'pup-site.html');
 });
 
 app.use('/api/manager', limiter, verifyTokenAndRole('manager'), (req, res) => {
   console.log('Manager Endpoint');
-  res.download('./pup.bat', 'pup.bat');
+  res.download('./pup-site.html', 'pup-site.html');
 });
 
 // POST new auth (public route)
@@ -100,8 +110,6 @@ app.post('/api/auth', limiter, async (req, res) => {
       role: 'user',
     },
   ];
-
-  console.log(users);
 
   const { username, password, role } = req.body;
 

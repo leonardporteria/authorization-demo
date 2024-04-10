@@ -70,7 +70,7 @@ const Authorized = () => {
   const handleLogin = async (usernameValue: string, passwordValue: string) => {
     setUsername(usernameValue);
     setPassword(passwordValue);
-    console.log(username, password, loginMode);
+
     try {
       const response = await fetch('/api/auth', {
         method: 'POST',
