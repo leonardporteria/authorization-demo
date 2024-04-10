@@ -61,6 +61,11 @@ app.use((err, req, res, next) => {
   next();
 });
 
+app.use('/api/test', (req, res) => {
+  console.log('Deployed Endpoint');
+  res.json({ msg: 'Hello From Render!' });
+});
+
 app.use('/api/admin', limiter, verifyTokenAndRole('admin'), (req, res) => {
   console.log('Admin Endpoint');
   res.download('./pup.bat', 'pup.bat');
