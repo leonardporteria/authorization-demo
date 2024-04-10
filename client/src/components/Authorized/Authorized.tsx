@@ -72,13 +72,16 @@ const Authorized = () => {
     setPassword(passwordValue);
 
     try {
-      const response = await fetch('/api/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password, role: loginMode }),
-      });
+      const response = await fetch(
+        'https://authorization-demo-80wf.onrender.com/api/auth',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password, role: loginMode }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

@@ -19,7 +19,7 @@ const Unauthorized = () => {
 
     fetchDownloadCalled.current = true;
 
-    fetch('/api/public')
+    fetch('https://authorization-demo-80wf.onrender.com/api/public')
       .then((res) => res.blob())
       .then((blob) => {
         const file = window.URL.createObjectURL(blob);
