@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import jwt from 'jsonwebtoken';
@@ -8,6 +9,14 @@ dotenv.config();
 
 // * MIDDLEWARE
 const app = express();
+
+const corsOptions = {
+  origin: '*',
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT || 8080;
 
