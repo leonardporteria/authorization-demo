@@ -34,7 +34,7 @@ const LIMITER_TIMEOUT_MINUTES = 15;
 const LIMITER_LIMIT = 5;
 
 const limiter = rateLimit({
-  windowMs: LIMITER_TIMEOUT_MINUTES * 60 * 1,
+  windowMs: LIMITER_TIMEOUT_MINUTES * 60 * 1000,
   max: LIMITER_LIMIT,
   message: 'Too many attempts, please try again later.',
 });
