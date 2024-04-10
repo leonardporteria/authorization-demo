@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // * RATE LIMITER CONFIG
 const LIMITER_TIMEOUT_MINUTES = 15;
-const LIMITER_LIMIT = 5;
+const LIMITER_LIMIT = 10;
 
 const limiter = rateLimit({
   windowMs: LIMITER_TIMEOUT_MINUTES * 60 * 1000,
