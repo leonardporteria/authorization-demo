@@ -1,6 +1,6 @@
 # Authorization Demonstration
 
-Demonstrating the difference of implementing authorization vs without authorizations. This aims to protect a file that will redirect to a specific website
+Demonstrating the difference of implementing authorization vs without authorizations. This aims to protect a file that will redirect to a specific website.
 
 ### Techstack:
 
